@@ -1,25 +1,13 @@
 import { useState, useEffect } from 'react'
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import './App.css';
 import TypingBox from './components/TypingBox';
 import StatBar from './components/StatBar';
 import Word from './components/Word'
-import words from 'random-words';
 
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'left',
-  color: theme.palette.text.secondary,
-}));
 
-const STARTINGTIME = 10;
-const WORDCOUNT = 50;
+const STARTINGTIME = 30;
+const WORDCOUNT = 75;
 
 
 
@@ -35,10 +23,7 @@ function App() {
   const [gameJustEnded, setJustEnded] = useState(false);
   const [wpm, setWPM] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
-
   // const [mistakes, setMistake] = useState(0);
-  // const [wpm, setwpm] = useState(0);
-  // const [finished, setFinished] = useState(false);
 
   useEffect(() => {
     let interval = null;
@@ -82,12 +67,9 @@ function App() {
     setTimer(STARTINGTIME)
     setWPM(0);
     setAccuracy(0);
-    // setMistake(0)
-    // setwpm(0)
   }
 
   const calculateWPM = () => {
-    
     if ((STARTINGTIME - timer) > 0) {
       return Math.round((correct / (STARTINGTIME - timer)) * 60);
     } else {
@@ -108,58 +90,26 @@ function App() {
     setWPM(calculateWPM());
     setAccuracy(calculateAccuracy());
   }
-  // const startTimer = () => {
-  //   let interval = setInterval(() => {
-  //     setTimer((prevTimer) => {
-  //       console.log(inGame);
-  //       if (prevTimer > 0) {
-  //         return prevTimer - 1;
-  //       } else {
-  //         setInGame(false);
-  //         clearInterval(interval);
-  //         return 0;
-  //       }
-
-  //       // if(prevTimer === 0) {
-  //       //   setInGame(false)
-  //       //   clearInterval(interval)
-  //       //   return 0
-          
-  //       //   // Do some state stuff
-  //       // } else {
-  //       //   return prevTimer - 1
-  //       // }
-  //     })
-  //   }, 1000)
-  // }
 
   return (
     <div className="App">
+      <div style={{display:'flex', justifyContent:"left", marginBottom:'0%'}}>
+        <h1 style={{color:'#2c666e', fontSize:"40px", marginBottom:'0%'}}>{"jasssse/typertest"}</h1>
+        {/* <a href="https://github.com/jasssse/typertest"> <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" className="githubIcon" /></a> */}
+      </div>
+
       {/* ToolBar */}
-      {/* <h3>{inGame.toString()}</h3> */}
-      <StatBar time = {timer}/>
-      <h3>{"Correct: " + correct}</h3>
+      <StatBar time = {timer} correct={correct}/>
 
       {/* Given Words */}
-      <div className="section">
-        <div className="card" >
-          <div className="card-content">
-            <div className="content">
-              {givenText.map((word, i) => (
-                <>
-                <Word key={i} userWord={userTextArray[i]} givenWord={word} isLast={i===(userTextArray.length - 1)} inGame={inGame} />
-                {/* <span key={i}>
-                  {word.split("").map((char, idx) => (
-                    <span key={idx}>{char}</span>
-                  ))}
-                </span> */}
-                <span> </span>
-                </>
-              ))}
-            </div>
+      <div className="section" style={{width:'70vw', marginTop:"0px"}}>
+        <div className="givenText" style={{textAlign:'left', fontSize:"1.5em"}}>
+          {givenText.map((word, i) => (<>
+          <Word key={i} userWord={userTextArray[i]} givenWord={word} isLast={i===(userTextArray.length - 1)} inGame={inGame} />
+          <span> </span>
+          </>))}
           </div>
         </div>
-      </div>
       
       {/* Typing area */}
       <div className="section">
@@ -174,25 +124,14 @@ function App() {
           startGame = {startGame} 
           inActive={finished}
         />
-
-        {/* <h3>{text}</h3> */}
       </div>
       
       {/* Control Buttons */}
-      <div className="section">
-        <span>
-        {inGame ? <button onClick={restart}>Restart</button> : <></>}
-        {finished? <h1>{"WPM: "+wpm}</h1> : <></>}
-        {finished? <h1>{"Accuracy: "+accuracy+"%"}</h1> : <></>}
-        </span>
-        
+      <div style={{display:'flex', justifyContent:"space-between"}}>
+        <h1 style={{color:'#2c666e', fontSize:"40px"}}>{wpm+" wpm"}</h1>
+        {finished? <h1 style={{color:'#2c666e', fontSize:"40px"}}>{"accuracy: "+accuracy+"%"}</h1> : <></>}
+        <button className='red' onClick={restart}>Restart</button>
       </div>
-
-      {/* End of Game Stats */}
-      <div className="section">
-
-      </div>
-
     </div>
   );
 }

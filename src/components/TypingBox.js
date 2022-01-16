@@ -1,7 +1,3 @@
-import TextField from '@mui/material/TextField';
-import { useState } from 'react'
-
-
 function TypingBox({ userText, setUserText, userTextArray, setUserTextArray, setCorrect, givenText, inGame, startGame, inActive }) {
   // Text comparison:
   const calculateMetrics = (e) => {
@@ -27,7 +23,8 @@ function TypingBox({ userText, setUserText, userTextArray, setUserTextArray, set
     <div>
       <textarea
         disabled={inActive}
-        style={{ height: "20em", width: "50em" }}
+        style={{ height: "100px", width: "100%", resize:"none", marginTop:"1em", fontFamily:"system-ui", fontSize:"1em"}}
+        
         type="textarea"
         placeholder="Start typing..."
         value={userText}

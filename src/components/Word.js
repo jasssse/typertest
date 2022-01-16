@@ -20,7 +20,7 @@ function Word({userWord, givenWord, isLast, inGame}) {
         )
     } else if (typeof userWord === "undefined") {
         return (
-            <span style={{ color: 'black' }}>
+            <span style={{ color: 'rgba(0,0,0,0.3)' }}>
                 {givenWord}
             </span>
         )
